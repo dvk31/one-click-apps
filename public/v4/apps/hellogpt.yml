@@ -1,148 +1,33 @@
 captainVersion: 4
-
 services:
-  "$$cap_appname":
-    image: mydockerhubusername/hellogpt:latest
-    environment:
-      DJANGO_SETTINGS_MODULE: hellogpt.settings.dev
-      POD_API_KEY: "$$cap_pod_api_key"
-      GATEWAY_TOKEN: "$$cap_gateway_token"
-      PINECONE_HOST: "$$cap_pinecone_host"
-      PINECONE_API_KEY: "$$cap_pinecone_api_key"
-      SAFERWEB_API_KEY: "$$cap_saferweb_api_key"
-      FMCSA_API_KEY: "$$cap_fmcsa_api_key"
-      REDIS_HOST: "$$cap_redis_host"
-      REDIS_PORT: "$$cap_redis_port"
-      REDIS_PASSWORD: "$$cap_redis_password"
-      REDIS_DB: "$$cap_redis_db"
-      SENDGRID_API_KEY: "$$cap_sendgrid_api_key"
-      RINGCENTRAL_CLIENT_ID: "$$cap_ringcentral_client_id"
-      RINGCENTRAL_CLIENT_SECRET: "$$cap_ringcentral_client_secret"
-      RINGCENTRAL_SERVER_URL: "$$cap_ringcentral_server_url"
-      RINGCENTRAL_JWT_TOKEN: "$$cap_ringcentral_jwt_token"
-      SUPABASE_URL: "$$cap_supabase_url"
-      SUPABASE_SERVICE_ROLE_KEY: "$$cap_supabase_service_role_key"
-      OPENAI_API_KEY: "$$cap_openai_api_key"
-      GROQ_API_KEY: "$$cap_groq_api_key"
-      ANTHROPIC_API_KEY: "$$cap_anthropic_api_key"
-      ELEVEN_API_KEY: "$$cap_eleven_api_key"
-      SUPABASE_API_URL: "$$cap_supabase_api_url"
-      SUPABASE_API_KEY: "$$cap_supabase_api_key"
-      MISTRAL_API_KEY: "$$cap_mistral_api_key"
-      HUGGINGFACE_API_TOKEN: "$$cap_huggingface_api_token"
-    caproverExtra:
-      containerHttpPort: '8000'
+    $$cap_appname:
+        image: hellogpt/hellogpt:$$cap_pod_dango
+        env_file:
+            - $$cap_appname_env_file
+        volumes:
+            - $$cap_appname-data:/data
+        restart: always
+        caproverExtra:
+            containerHttpPort: '8000'
 
 caproverOneClickApp:
-  variables:
-    - id: "$$cap_pod_api_key"
-      label: POD API Key
-      description: Your POD API key
-      validRegex: '/.{1,}/'
-    - id: "$$cap_gateway_token"
-      label: Gateway Token
-      description: Your Gateway Token
-      validRegex: '/.{1,}/'
-    - id: "$$cap_pinecone_host"
-      label: Pinecone Host
-      description: Your Pinecone Host
-      validRegex: '/.{1,}/'
-    - id: "$$cap_pinecone_api_key"
-      label: Pinecone API Key
-      description: Your Pinecone API Key
-      validRegex: '/.{1,}/'
-    - id: "$$cap_saferweb_api_key"
-      label: SAFERWEB API Key
-      description: Your SAFERWEB API Key
-      validRegex: '/.{1,}/'
-    - id: "$$cap_fmcsa_api_key"
-      label: FMCSA API Key
-      description: Your FMCSA API Key
-      validRegex: '/.{1,}/'
-    - id: "$$cap_redis_host"
-      label: Redis Host
-      description: Your Redis Host
-      validRegex: '/.{1,}/'
-    - id: "$$cap_redis_port"
-      label: Redis Port
-      description: Your Redis Port
-      defaultValue: '6379'
-      validRegex: '/\d+/'
-    - id: "$$cap_redis_password"
-      label: Redis Password
-      description: Your Redis Password
-      validRegex: '/.{1,}/'
-    - id: "$$cap_redis_db"
-      label: Redis DB
-      description: Your Redis DB
-      defaultValue: '0'
-      validRegex: '/\d+/'
-    - id: "$$cap_sendgrid_api_key"
-      label: SendGrid API Key
-      description: Your SendGrid API Key
-      validRegex: '/.{1,}/'
-    - id: "$$cap_ringcentral_client_id"
-      label: RingCentral Client ID
-      description: Your RingCentral Client ID
-      validRegex: '/.{1,}/'
-    - id: "$$cap_ringcentral_client_secret"
-      label: RingCentral Client Secret
-      description: Your RingCentral Client Secret
-      validRegex: '/.{1,}/'
-    - id: "$$cap_ringcentral_server_url"
-      label: RingCentral Server URL
-      description: Your RingCentral Server URL
-      validRegex: '/.{1,}/'
-    - id: "$$cap_ringcentral_jwt_token"
-      label: RingCentral JWT Token
-      description: Your RingCentral JWT Token
-      validRegex: '/.{1,}/'
-    - id: "$$cap_supabase_url"
-      label: Supabase URL
-      description: Your Supabase URL
-      validRegex: '/.{1,}/'
-    - id: "$$cap_supabase_service_role_key"
-      label: Supabase Service Role Key
-      description: Your Supabase Service Role Key
-      validRegex: '/.{1,}/'
-    - id: "$$cap_openai_api_key"
-      label: OpenAI API Key
-      description: Your OpenAI API Key
-      validRegex: '/.{1,}/'
-    - id: "$$cap_groq_api_key"
-      label: Groq API Key
-      description: Your Groq API Key
-      validRegex: '/.{1,}/'
-    - id: "$$cap_anthropic_api_key"
-      label: Anthropic API Key
-      description: Your Anthropic API Key
-      validRegex: '/.{1,}/'
-    - id: "$$cap_eleven_api_key"
-      label: Eleven API Key
-      description: Your Eleven API Key
-      validRegex: '/.{1,}/'
-    - id: "$$cap_supabase_api_url"
-      label: Supabase API URL
-      description: Your Supabase API URL
-      validRegex: '/.{1,}/'
-    - id: "$$cap_supabase_api_key"
-      label: Supabase API Key
-      description: Your Supabase API Key
-      validRegex: '/.{1,}/'
-    - id: "$$cap_mistral_api_key"
-      label: Mistral API Key
-      description: Your Mistral API Key
-      validRegex: '/.{1,}/'
-    - id: "$$cap_huggingface_api_token"
-      label: HuggingFace API Token
-      description: Your HuggingFace API Token
-      validRegex: '/.{1,}/'
-  instructions:
-    start: |-
-      Your Django application is being deployed.
-    end: |-
-      Your Django application has been successfully deployed!
-  displayName: HelloGPT Django App
-  isOfficial: false
-  description: A Django application for HelloGPT.
-  documentation: https://your.documentation.url/
+    variables:
+        - id: $$cap_pod_danjo
+          label: HelloGPT Pod Version
+          defaultValue: latest
+          description: The version of the HelloGPT Docker image to use.
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_appname_env_file
+          label: Environment File
+          defaultValue: .env
+          description: Path to the environment variables file.
+          validRegex: /.+/
+    instructions:
+        start: >-
+            HelloGPT is a Django application that provides various AI services.
+        end: >-
+            Please wait for a few minutes. HelloGPT is deployed and available as $$cap_appname.
+    displayName: HelloGPT
+    isOfficial: true
+    description: HelloGPT is a Django application providing AI services.
+    documentation: https://github.com/yourusername/hellogpt
